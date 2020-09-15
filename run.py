@@ -30,6 +30,8 @@ class Runner:
         # test_dataloader = Model.data_loader(mode='test')
 
         prefetch_dataset = get_dataset()
+        train_dataset = prefetch_dataset[0:-20]
+        test_dataset = prefetch_dataset[-20:]
 
         # setup optimizer:
         parameters = network.parameters()
@@ -41,10 +43,10 @@ class Runner:
 
         # pass model, loss, optimizer and dataset to the trainer
         # get trainer
-        # trainer = utils.get_trainer()(network, optimizer, train_dataloader, test_dataloader, is_cuda, logdir, savedir)
+        trainer = utils.get_trainer()(network, optimizer, train_dataset, test_dataset, is_cuda, logdir, savedir)
 
         # train!
-        # trainer.run(hp.train.num_epochs)
+        trainer.run(hp.train.num_epochs)
 
     def eval(self):
         raise NotImplementedError('Evaluation mode is not implemented!')

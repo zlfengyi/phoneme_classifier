@@ -19,7 +19,7 @@ def get_dataset():
         phn_file = file.replace("wav", "PHN").replace("WAV", "PHN")
         mfccs, phns = get_mfccs_phones(wav_data, phn_file,
                                        random_crop=False, trim=False)
-        dataset.append([FloatTensor(mfccs), LongTensor(phns)])
+        dataset.append((FloatTensor(mfccs), LongTensor(phns)))
         if index % 100 == 0:
             trainer_logger.info("%d files processed." % index)
 
