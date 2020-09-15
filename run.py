@@ -1,7 +1,7 @@
 import fire
 import utils
 from torch import optim
-import data
+import data.prefetch_dataset import get_dataset
 
 from models.model import Model
 from settings.hparam import hparam as hp
@@ -29,7 +29,7 @@ class Runner:
         # train_dataloader = Model.data_loader(mode='train')
         # test_dataloader = Model.data_loader(mode='test')
 
-        prefetch_dataset= data.prefetch_dataset.get_dataset()
+        prefetch_dataset = get_dataset()
 
         # setup optimizer:
         parameters = network.parameters()

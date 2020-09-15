@@ -8,7 +8,7 @@ from settings.hparam import hparam as hp
 from trainers.trainer import trainer_logger
 from torch import FloatTensor, LongTensor
 
-def get_dataset(self):
+def get_dataset():
     wav_files = glob.glob(getattr(hp, "train").data_path)
 
     trainer_logger.info("Total %d wav files" % len(wav_files))
