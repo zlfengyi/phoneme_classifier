@@ -26,7 +26,7 @@ class VoiceData:
                                                                                                    "PHN").replace(
                 "wav.arr", "PHN")
         else:
-            return self.wav_file_path.replace("WAV.wav", "PHN").replace("wav", "PHN")
+            return self.wav_file_path.replace("WAV.wav", "PHN").replace("wav", "PHN").replace("WAV", "PHN")
 
     @property
     def phn_length(self):

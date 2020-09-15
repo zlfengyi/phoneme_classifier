@@ -1,6 +1,6 @@
-logdir_path: '/content/drive/My Drive/pyvc/train1/logdir'
+logdir_path: 'logdir'
 log_step: 1
-num_workers: 16
+num_workers: 0
 max_len: 2000
 
 ---
@@ -27,14 +27,14 @@ default:
     dropout_rate: 0.2
 
     # train
-    batch_size: 32
+    batch_size: 10 
 
     # train test split
     data_split: 1.0
 ---
 train:
     # path
-    data_path: '/content/drive/My Drive/timit/data/TRAIN/DR8/*/*.wav'
+    data_path: '/root/fy/timit/raw/TIMIT/TRAIN/*/*/*.WAV'
     # model
     hidden_units: 256  # alias: E
     num_banks: 16
@@ -44,17 +44,17 @@ train:
     dropout_rate: 0.2
 
     # train
-    batch_size: 32
+    batch_size: 20 
     lr: 0.001
     num_epochs: 1000
     save_per_epoch: 2
 ---
 test:
     # path
-    data_path: '/content/drive/My Drive/timit/data/TEST/DR8/F*/*.wav'
+    data_path: '/root/fy/timit/raw/TIMIT/TEST/DR8/*/*.WAV'
 
     # test
-    batch_size: 2
+    batch_size: 10
 
     # data loader test data path 1
-    test_data_path1: '/data/public/rw/datasets/voice_all/timit/TIMIT/TRAIN/DR5/FDMY0/SA1.wav'
+    # test_data_path1: '/data/public/rw/datasets/voice_all/timit/TIMIT/TRAIN/DR5/FDMY0/SA1.wav'

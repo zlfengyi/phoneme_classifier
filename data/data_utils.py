@@ -52,7 +52,7 @@ def get_mfccs_phones(wav_data, phn_file, trim=False, random_crop=True):
     phn2idx, idx2phn = load_vocab()
     phns = np.zeros(shape=(num_timesteps,))
     bnd_list = []
-    for line in open(phn_file, 'r').read().splitlines():
+    for line in open(phn_file, 'r', encoding='ASCII').read().splitlines():
         start_point, _, phn = line.split()
         bnd = int(start_point) // hp.default.hop_length
         phns[bnd:] = phn2idx[phn]

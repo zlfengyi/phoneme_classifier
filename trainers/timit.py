@@ -30,7 +30,8 @@ class TIMITTrainer(Trainer):
         trainer_logger.info('------------- TRAIN Epoch : %d -------------' % epoch)
         nb_batch = len(self.train_dataset)
         self.status['train'] = defaultdict(float)
-
+	
+        # set_trace()
         for i, ds in enumerate(self.train_dataset):
             current_step = epoch * nb_batch + i + 1
             loss, cor, nb = TIMITModelInferencer.train(

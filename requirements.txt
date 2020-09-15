@@ -1,5 +1,5 @@
 numpy 
-librosa
+librosa==0.6.3
 torch
 pyyaml
 soundfile
@@ -8,3 +8,5 @@ tqdm
 fire
 pyarrow
 tensorboardX
+numba==0.48.0
+
