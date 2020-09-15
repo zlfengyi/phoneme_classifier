@@ -1,7 +1,7 @@
 import fire
 import utils
 from torch import optim
-import data.prefetch_dataset import get_dataset
+from data.prefetch_dataset import get_dataset
 
 from models.model import Model
 from settings.hparam import hparam as hp
