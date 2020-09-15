@@ -1,6 +1,7 @@
 import fire
 import utils
 from torch import optim
+import data
 
 from models.model import Model
 from settings.hparam import hparam as hp
@@ -25,8 +26,10 @@ class Runner:
         network = utils.get_networks(model, checkpoint, is_cuda, is_multi_gpu)
 
         # setup dataset
-        train_dataloader = Model.data_loader(mode='train')
-        test_dataloader = Model.data_loader(mode='test')
+        # train_dataloader = Model.data_loader(mode='train')
+        # test_dataloader = Model.data_loader(mode='test')
+
+        prefetch_dataset= data.prefetch_dataset.get_dataset()
 
         # setup optimizer:
         parameters = network.parameters()
@@ -35,12 +38,13 @@ class Runner:
         lr = getattr(hp, mode).lr
         optimizer = optim.Adam([p for p in parameters if p.requires_grad], lr=lr)
 
+
         # pass model, loss, optimizer and dataset to the trainer
         # get trainer
-        trainer = utils.get_trainer()(network, optimizer, train_dataloader, test_dataloader, is_cuda, logdir, savedir)
+        # trainer = utils.get_trainer()(network, optimizer, train_dataloader, test_dataloader, is_cuda, logdir, savedir)
 
         # train!
-        trainer.run(hp.train.num_epochs)
+        # trainer.run(hp.train.num_epochs)
 
     def eval(self):
         raise NotImplementedError('Evaluation mode is not implemented!')
