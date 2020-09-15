@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from data.data_utils import PHNS
 from settings.hparam import hparam as hp
 from data.data_loader import TrainVoiceDataset, TestVoiceDataset
-
+from IPython.core.debugger import set_trace
 
 class Model(nn.Module):
     """

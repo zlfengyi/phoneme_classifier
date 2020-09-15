@@ -5,6 +5,9 @@ import pyarrow as pa
 from sklearn.model_selection import train_test_split
 from data.audio import preemphasis, amp_to_db
 from settings.hparam import hparam as hp
+from IPython.core.debugger import set_trace
+import math
+from IPython.core.debugger import set_trace
 
 
 PHNS = ['h#', 'aa', 'ae', 'ah', 'ao', 'aw', 'ax', 'ax-h', 'axr', 'ay', 'b', 'bcl',
@@ -184,14 +187,7 @@ def load_data(mode, split=-1.0):
     wav_files = glob.glob(file_path)
     if len(wav_files) == 0:
         wav_files = glob.glob(getattr(hp, mode).data_path)
-    if split and 0.0 < split < 1.0:
-        train_wav_files, test_wav_files = train_test_split(wav_files, train_size=split, random_state=1234)
-        if 'train' in mode:
-            wav_files = train_wav_files
-        elif 'test' in mode:
-            wav_files = test_wav_files
-        else:
-            NotImplementedError('Other mode are not implemented in split mode! (mode: %s, split: %.4f)' % (mode, split))
+    
     return wav_files
 
 

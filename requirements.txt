@@ -1,9 +1,10 @@
-numpy >= 1.11.1
-librosa == 0.5.1
-torch == 0.3.1
+numpy 
+librosa
+torch
 pyyaml
 soundfile
 pydub
 tqdm
 fire
 pyarrow
+tensorboardX

@@ -10,7 +10,7 @@ from collections import defaultdict
 from settings.hparam import hparam as hp
 from data.data_utils import PHNS
 from trainers.trainer import Trainer, trainer_logger, ModelInferencer
-
+from IPython.core.debugger import set_trace
 
 class TIMITTrainer(Trainer):
     """
@@ -163,7 +163,7 @@ class TIMITModelInferencer(ModelInferencer):
 
         if batch_idx % hp.log_step == 0:
             msg = '%d epoch / %d/%d batch / %d iteration / Elapsed: %.2f sec / total loss: %.6f / Accuracy %.6f' \
-                  % (epoch, batch_idx, nb_batch, current_step, time_per_step, loss.data[0], accuracy)
+                  % (epoch, batch_idx, nb_batch, current_step, time_per_step, loss.data, accuracy)
             trainer_logger.info(msg)
 
         return loss.data.cpu().numpy(), cor, nb
@@ -195,7 +195,7 @@ class TIMITModelInferencer(ModelInferencer):
 
         if batch_idx % hp.log_step == 0:
             msg = '%d/%d batch / Elapsed: %.2f sec / Total loss: %.6f / Accuracy %.6f' \
-                  % (batch_idx, nb_batch, time.time() - start_time, loss.data[0], accuracy)
+                  % (batch_idx, nb_batch, time.time() - start_time, loss.data, accuracy)
             if topk > 0:
                 msg = msg + ' / Top %d accuracy %.6f  ' % (topk, topk_acc)
             trainer_logger.info(msg)

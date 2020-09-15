@@ -69,7 +69,7 @@ class VoiceDataset(Dataset):
 
     def __init__(self, mode='train', data_split=-1.0, init_all=True):
         self.mode = mode
-        self.wav_files = load_data(mode=mode, split=data_split)
+        self.wav_files = load_data(mode=mode, split=hp.default.data_split)
         self.idx_list = list(range(len(self.wav_files)))
         self.init_all = init_all
 

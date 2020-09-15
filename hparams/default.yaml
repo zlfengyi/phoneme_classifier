@@ -1,16 +1,14 @@
-logdir_path: './logdir'
+logdir_path: '/content/drive/My Drive/pyvc/train1/logdir'
 log_step: 1
 num_workers: 16
 max_len: 2000
 
 ---
 default:
-    sr: 16000
-    frame_shift: 0.005
-    frame_length:  0.025
-    win_length: 400
-    hop_length: 80
-    n_fft: 512
+    sr: 22050
+    win_length: 1024
+    hop_length: 256
+    n_fft: 1024
     preemphasis: 0.97
     n_mfcc: 40
     n_iter: 60 # Number of inversion iterations
@@ -30,10 +28,13 @@ default:
 
     # train
     batch_size: 32
+
+    # train test split
+    data_split: 1.0
 ---
 train:
     # path
-    data_path: '/data/public/rw/datasets/voice_all/timit/TIMIT/TRAIN/*/*/*.wav'
+    data_path: '/content/drive/My Drive/timit/data/TRAIN/DR8/*/*.wav'
     # model
     hidden_units: 256  # alias: E
     num_banks: 16
@@ -43,17 +44,17 @@ train:
     dropout_rate: 0.2
 
     # train
-    batch_size: 128
+    batch_size: 32
     lr: 0.001
     num_epochs: 1000
     save_per_epoch: 2
 ---
 test:
     # path
-    data_path: '/data/public/rw/datasets/voice_all/timit/TIMIT/TEST/*/*/*.wav'
+    data_path: '/content/drive/My Drive/timit/data/TEST/DR8/F*/*.wav'
 
     # test
-    batch_size: 128
+    batch_size: 2
 
     # data loader test data path 1
     test_data_path1: '/data/public/rw/datasets/voice_all/timit/TIMIT/TRAIN/DR5/FDMY0/SA1.wav'
