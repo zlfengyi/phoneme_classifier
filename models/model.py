@@ -3,10 +3,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.utils.data import DataLoader
 from data.data_utils import PHNS
 from settings.hparam import hparam as hp
-from data.data_loader import TrainVoiceDataset, TestVoiceDataset
 from IPython.core.debugger import set_trace
 
 class Model(nn.Module):
@@ -15,19 +13,6 @@ class Model(nn.Module):
     """
     def __init__(self):
         super(Model, self).__init__()
-
-    @staticmethod
-    def data_loader(mode):
-        if mode == 'train':
-            dataset = TrainVoiceDataset()
-        elif mode == 'test':
-            dataset = TestVoiceDataset()
-        else:
-            raise NotImplementedError('%s mode is not implemented ! ' % mode)
-
-        data_loader = DataLoader(dataset, batch_size=hp.train.batch_size,
-                                 shuffle=(mode == 'train'), num_workers=hp.num_workers, drop_last=False)
-        return data_loader
 
     @staticmethod
     def calc_output(net):

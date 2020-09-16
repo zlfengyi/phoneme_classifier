@@ -1,9 +1,8 @@
 import fire
 import utils
 from torch import optim
-from data.prefetch_dataset import get_dataset
-
-from models.model import Model
+from data.prefetch_dataset import VoiceDataset
+from torch.utils.data import DataLoader
 from settings.hparam import hparam as hp
 
 
@@ -25,13 +24,11 @@ class Runner:
         # get network
         network = utils.get_networks(model, checkpoint, is_cuda, is_multi_gpu)
 
-        # setup dataset
-        # train_dataloader = Model.data_loader(mode='train')
-        # test_dataloader = Model.data_loader(mode='test')
-
-        prefetch_dataset = get_dataset()
-        train_dataset = prefetch_dataset[0:-20]
-        test_dataset = prefetch_dataset[-20:]
+        # Setup dataset
+        train_dataloader = DataLoader(VoiceDataset(mode='train'), batch_size=hp.train.batch_size,
+                                      shuffle=(mode == 'train'), num_workers=hp.num_workers, drop_last=False)
+        test_dataloader = DataLoader(VoiceDataset(mode='test'), batch_size=hp.test.batch_size,
+                                     shuffle=(mode == 'test'), num_workers=hp.num_workers, drop_last=False)
 
         # setup optimizer:
         parameters = network.parameters()
@@ -43,7 +40,7 @@ class Runner:
 
         # pass model, loss, optimizer and dataset to the trainer
         # get trainer
-        trainer = utils.get_trainer()(network, optimizer, train_dataset, test_dataset, is_cuda, logdir, savedir)
+        trainer = utils.get_trainer()(network, optimizer, train_dataloader, test_dataloader, is_cuda, logdir, savedir)
 
         # train!
         trainer.run(hp.train.num_epochs)
