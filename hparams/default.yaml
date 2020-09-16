@@ -2,6 +2,7 @@ logdir_path: 'logdir'
 log_step: 1
 num_workers: 0
 max_len: 2000
+cache_version: 'cache_v1.npy'
 
 ---
 default:
@@ -17,6 +18,7 @@ default:
     max_db: 35
     min_db: -55
     quantize_db: 101
+
 
     # model
     hidden_units: 256  # alias: E

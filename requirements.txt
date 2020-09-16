@@ -9,4 +9,5 @@ fire
 pyarrow
 tensorboardX
 numba==0.48.0
+IPython
 
