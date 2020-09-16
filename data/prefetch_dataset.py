@@ -9,6 +9,7 @@ from torch.utils.data import Dataset
 from torch import FloatTensor, LongTensor
 import os
 import utils
+from IPython.core.debugger import set_trace
 
 def get_cache_data(mode):
     wav_files = glob.glob(getattr(hp, mode).data_path)
@@ -41,9 +42,12 @@ class Train1Dataset(Dataset):
         self.cache_data = get_cache_data(mode)
 
     def __getitem__(self, idx):
-        # Random crop
+        if not isinstance(self.cache_data[idx], dict):
+            self.cache_data[idx] = self.cache_data[idx].tolist()
+	# Random crop
         if self.random_crop:
             n_timesteps = (hp.default.duration * hp.default.sr) // hp.default.hop_length + 1
+            # set_trace()
             start = np.random.choice(range(int(np.maximum(1, len(self.cache_data[idx]['mfccs']) - n_timesteps))), 1)[0]
             end = start + n_timesteps
         else:
