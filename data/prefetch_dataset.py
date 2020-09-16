@@ -10,16 +10,14 @@ from torch import FloatTensor, LongTensor
 import os
 import utils
 
-logger = utils.get_logger('prefetch_dataset')
-
 def get_cache_data(mode):
     wav_files = glob.glob(getattr(hp, mode).data_path)
 
-    logger.info("Total %d wav files" % len(wav_files))
+    print("Total %d wav files" % len(wav_files))
     result = []
     for index, file in enumerate(wav_files):
         if index % 100 == 0:
-            logger.info("%d files processed." % index)
+            print("%d files processed." % index)
 
         cache_file = file.replace("wav", hp.cache_version).replace("WAV", hp.cache_version)
         if os.path.exists(cache_file):
@@ -37,12 +35,23 @@ def get_cache_data(mode):
     return result
 
 class Train1Dataset(Dataset):
-    def __init__(self, mode='train'):
+    def __init__(self, mode='train', random_crop=True):
         self.mode = mode
+        self.random_crop = random_crop
         self.cache_data = get_cache_data(mode)
 
     def __getitem__(self, idx):
-        return FloatTensor(self.cache_data[idx]['mfccs']), LongTensor(self.cache_data[idx]['phns'])
+        # Random crop
+        if self.random_crop:
+            n_timesteps = (hp.default.duration * hp.default.sr) // hp.default.hop_length + 1
+            start = np.random.choice(range(int(np.maximum(1, len(self.cache_data[idx]['mfccs']) - n_timesteps))), 1)[0]
+            end = start + n_timesteps
+        else:
+            start = 0
+            end = len(self.cache_data[idx]['mfccs'])
+
+        return FloatTensor(self.cache_data[idx]['mfccs'][start:end]), \
+               LongTensor(self.cache_data[idx]['phns'][start:end])
 
     def __len__(self):
         return len(self.cache_data)
